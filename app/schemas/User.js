@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const UserSchema = new Schema({
@@ -17,11 +17,11 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.virtual('uid').get(function () {
+UserSchema.virtual("uid").get(function () {
   return this._id.toHexString();
 });
-UserSchema.set('toJSON', {
+UserSchema.set("toJSON", {
   virtuals: true,
 });
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model("User", UserSchema);

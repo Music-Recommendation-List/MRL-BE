@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -20,11 +20,11 @@ const CommentSchema = new Schema({
   },
 });
 
-CommentSchema.virtual('commentId').get(function () {
+CommentSchema.virtual("commentId").get(function () {
   return this._id.toHexString();
 });
-CommentSchema.set('toJSON', {
+CommentSchema.set("toJSON", {
   virtuals: true,
 });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model("Comment", CommentSchema);
