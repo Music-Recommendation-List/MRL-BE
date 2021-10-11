@@ -125,3 +125,25 @@ router.put("/posts/detail/:postId", async (req, res) => {
     });
   }
 });
+
+//게시글 삭제
+router.delete("/posts/detail/:postId", async (req, res) => {
+  try {
+    // 로그인 유저 확인
+    // const {userId } = res.locals.user;
+    const { postId } = req.params;
+
+    const isBoard = await Boards.findById(postId);
+    if (isBoard) {
+      await Boards.delete();
+    }
+    // const isComment = await Comment.findById(postId);
+    // if (isComment.length > 0) {
+    //   await Comment.deleteMany({ borderDate });
+    // }
+  } catch (err) {
+    res.status(400).send({
+      message: "게시글을 삭제하는데 알 수 없는 문제가 발생했습니다.",
+    });
+  }
+});
