@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 const PostSchema = new Schema({
-  title: {
+  songName: {
     type: String,
     required: true,
   },
@@ -13,7 +13,7 @@ const PostSchema = new Schema({
   desc: {
     type: String,
   },
-  songName: {
+  singer: {
     type: String,
     required: true,
   },
@@ -38,11 +38,11 @@ const PostSchema = new Schema({
   },
 });
 
-PostSchema.virtual('postId').get(function () {
+PostSchema.virtual("postId").get(function () {
   return this._id.toHexString();
 });
-PostSchema.set('toJSON', {
+PostSchema.set("toJSON", {
   virtuals: true,
 });
 
-export default mongoose.model('Post', PostSchema);
+export default mongoose.model("Post", PostSchema);
