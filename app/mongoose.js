@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -12,4 +12,4 @@ const mongoConnect = async () => {
     .catch((error) => console.error('몽고디비 연결 에러', error));
 };
 
-export default mongoConnect;
+module.exports = mongoConnect;

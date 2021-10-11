@@ -5,7 +5,6 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
 const app = express();
 
 // view engine setup
@@ -34,6 +33,25 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/login', (req, res) => {
+  try{
+    return res.status(200).render('login');
+  } catch(error) {
+    console.log("로그인창 오류 발생");
+    return res.status(400).render('error');
+  }
+});
+
+
+app.get('/signup', (req, res) => {
+  try{
+    return res.status(200).render('signUp');
+  } catch(error) {
+    console.log("로그인창 오류 발생");
+    return res.status(400).render('error');
+  }
 });
 
 module.exports = app;
