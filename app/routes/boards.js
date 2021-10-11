@@ -47,3 +47,23 @@ router.post("/posts", async (req, res) => {
     });
   }
 });
+
+//게시글 조회
+router.post("/posts", async (req, res) => {
+  try {
+    const boards = await boards.find({});
+
+    // const query1 = category1 === undefined ? {} : { category1: category1 };
+    // const query2 = category2 === undefined ? {} : { category2: category2 };
+    // const query3 = category3 === undefined ? {} : { category3: category3 };
+    // const boards = await boards.find({ query1 && query2 && query3 })
+
+    res.status(201).send({ ok: true, results });
+  } catch (err) {
+    //에러 발생 시 message 핸들링
+    console.log(err);
+    res.status(400).send({
+      message: "음악을 불러오는데 알 수 없는 문제가 발생했습니다.",
+    });
+  }
+});
