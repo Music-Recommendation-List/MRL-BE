@@ -7,8 +7,9 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
-  writer: {
+  userId: {
     type: String,
+    required: true,
   },
   contents: {
     type: String,
@@ -19,7 +20,7 @@ const CommentSchema = new Schema({
   },
 });
 
-CommentSchema.virtual('uid').get(function () {
+CommentSchema.virtual('commentId').get(function () {
   return this._id.toHexString();
 });
 CommentSchema.set('toJSON', {

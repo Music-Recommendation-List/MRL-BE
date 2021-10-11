@@ -6,30 +6,39 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  userName: {
+  userId: {
     type: String,
     required: true,
   },
-  userPwd: {
+  desc: {
+    type: String,
+  },
+  songName: {
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  },
-  thumbnail: {
+  url: {
     type: String,
   },
   date: {
     type: Date,
     required: true,
   },
-  views: {
-    type: Number,
+  category1: {
+    type: String,
+  },
+  category2: {
+    type: String,
+  },
+  category3: {
+    type: String,
+  },
+  likeUser: {
+    type: Array,
   },
 });
 
-PostSchema.virtual('uid').get(function () {
+PostSchema.virtual('postId').get(function () {
   return this._id.toHexString();
 });
 PostSchema.set('toJSON', {
