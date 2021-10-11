@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 const PostSchema = new Schema({
-  title: {
+  songName: {
     type: String,
     required: true,
   },
@@ -13,7 +13,7 @@ const PostSchema = new Schema({
   desc: {
     type: String,
   },
-  songName: {
+  singer: {
     type: String,
     required: true,
   },
