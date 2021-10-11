@@ -67,3 +67,61 @@ router.post("/posts", async (req, res) => {
     });
   }
 });
+
+//게시글 상세 페이지
+router("/posts/detail/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const board = await Boards.findById(postId);
+
+    if (!board) {
+      // board 정보가 없을 때
+      res.status(404).send({
+        message:
+          "게시글에 알 수 없는 문제가 발생했습니다. 관리자에게 문의해주세요.",
+      });
+    } else {
+      res.send({ ok: true, results });
+    }
+  } catch (err) {
+    //에러 발생 시 message 핸들링
+    console.log(err);
+    res.status(400).send({
+      message: "게시글을 불러오는데 알 수 없는 문제가 발생했습니다.",
+    });
+  }
+});
+
+//게시글 수정
+router.put("/posts/detail/:postId", async (req, res) => {
+  try {
+    // 로그인 유저 확인
+    // const {userId } = res.locals.user;
+    const { postId } = req.params;
+    const { songName, desc, singer, url, category1, category2, category3 } =
+      res.body;
+
+    const isBoard = await Boards.findById(postId);
+    if (isBoard.length) {
+      await Boards.updateOne(
+        { postId },
+        {
+          $set: {
+            songName,
+            desc,
+            singer,
+            url,
+            category1,
+            category2,
+            category3,
+          },
+        }
+      );
+    }
+    res.send({ ok: true, result });
+  } catch (err) {
+    res.status(400).send({
+      message: "게시글을 수정하는데 알 수 없는 문제가 발생했습니다.",
+    });
+  }
+});
