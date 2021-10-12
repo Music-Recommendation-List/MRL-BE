@@ -4,14 +4,13 @@ const path = require("path");
 const logger = require("morgan");
 
 const boardsRouter = require("./routes/boards");
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const commentRouter = require('./routes/comment');
+const usersRouter = require("./routes/users");
+const commentRouter = require("./routes/comment");
 
 const app = express();
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 // app.set('view engine', 'pug');
 
 app.use(logger("dev"));
@@ -20,24 +19,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 //boards 라우터 연결
-app.use('/', indexRouter);
 app.use("/api", boardsRouter);
-app.use('/api', usersRouter);
-app.use('/api', commentRouter);
+app.use("/api", usersRouter);
+app.use("/api", commentRouter);
 
 //지워야할 것
-app.use('/login', (req, res) => {
-  return res.render('logIn');
+app.use("/login", (req, res) => {
+  return res.render("logIn");
 });
 
 //지워야할 것
-app.use('/signup', (req, res) => {
-  return res.render('signUp');
+app.use("/signup", (req, res) => {
+  return res.render("signUp");
 });
 
 //지워야할 것
-app.use('/main', (req, res) => {
-  return res.render('mainTest');
+app.use("/main", (req, res) => {
+  return res.render("mainTest");
 });
 
 // catch 404 and forward to error handler
