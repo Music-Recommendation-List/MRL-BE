@@ -31,30 +31,31 @@
     //   };
 
      function login() {
-       let nickName = $('#login_nickName').val();
-       let pw = $('#login_pw').val();
+       let userId = $('#login_userId').val();
+       let password = $('#login_password').val();
 
        $.ajax({
          type: "POST",
          url: `/api/users/login`,
-         data: { nickName, pw },
+         data: { userId, password },
          success: function (response) {
-           if (response["result"] === "success") {
+           if (response.result === "success") {
              localStorage.setItem("token", response.token); //.setItem 은 로컬스토리지에 저장하는 것의 키:벨류 를 정하기 가능
-             window.location.href='/main';
-           } else if (response["result"] === "failure") {
-              alert(response["errorMessage"]);
+              alert(response.userId);
+              alert(response.successMsg);
+             //  window.location.href='/';
+           } else if (response.result === "failure") {
+              alert(response.errorMsg);
               return;
            }
          },
-         error: function(error) { 
-          // console.log(error);
-          alert(error.responseJSON.errorMessage);
-          return;
-        }
       });
      };
-
+     //  error: function(error) { 
+        //   // console.log(error);
+        //   alert(error.responseJSON.errorMessage);
+        //   return;
+        // }
      
 
 
@@ -66,19 +67,19 @@
   <p></p>
   <div id="login">
       <div id="id">
-         <label for="login_nickName">
+         <label for="login_userId">
             닉네임을 입력해 주세요
          </label>
          <p></p>
-         <input type="text" id="login_nickName" style="height: 20px; width: 20%;" required>
+         <input type="text" id="login_userId" style="height: 20px; width: 20%;" required>
       </div>
       <p></p>
-      <div id="pw">
-          <label for="login_pw">
+      <div id="password">
+          <label for="login_password">
              비밀 번호를 입력해 주세요
          </label>
          <p></p>
-         <input type="password" id="login_pw" style="height: 20px; width: 20%;" required>
+         <input type="password" id="login_password" style="height: 20px; width: 20%;" required>
       </div>
       <p></p>
      <a> --------------------------------------------------- </a> 
