@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 
-const boardsRouter = require("./routes/boards");
+const postsRouter = require("./routes/boards");
 const usersRouter = require("./routes/users");
 const commentRouter = require("./routes/comment");
 
@@ -18,8 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-//boards 라우터 연결
-app.use("/api", boardsRouter);
+// 라우터 연결
+app.use("/api", postsRouter);
 app.use("/api", usersRouter);
 app.use("/api", commentRouter);
 
