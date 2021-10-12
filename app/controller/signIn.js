@@ -4,7 +4,7 @@ const Jwt = require('jsonwebtoken');
 
 // 로그인 컨트롤러
 //db에서 찾아서 맞다면 토큰 발행
-exports.signInFunc = async (req, res) => {
+exports.signInFn = async (req, res) => {
   console.log(req.body);
   const { userId, password } = req.body;
 
