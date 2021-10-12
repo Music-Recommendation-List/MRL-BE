@@ -4,7 +4,7 @@ const Posts = require("../schemas/Post");
 // const Comment = require("../schemas/Comment");
 
 //게시글 등록
-router.post("/posts", async (req, res) => {
+router.post("/post/write", async (req, res) => {
   try {
     // 로그인 유저 확인
     // const {userId } = res.locals.user;
@@ -49,13 +49,14 @@ router.post("/posts", async (req, res) => {
 });
 
 //게시글 조회
-router.post("/posts/category", async (req, res) => {
+router.post("/posts", async (req, res) => {
   try {
     const { category1, category2, category3 } = req.body;
     const query1 = category1 === undefined ? {} : { category1: category1 };
     const query2 = category2 === undefined ? {} : { category2: category2 };
     const query3 = category3 === undefined ? {} : { category3: category3 };
-    const posts = await Posts.find(query1 || query2 || query3);
+    const posts = await Posts.find({ $and: [query1, { query2 }, query3] });
+    console.log(posts.length);
 
     res.status(201).send({ ok: true, results: posts });
   } catch (err) {
@@ -73,7 +74,7 @@ router.get("/posts/detail/:postId", async (req, res) => {
     const posts = await Posts.findById(postId);
     if (!posts) {
       // boards 정보가 없을 때
-      res.status(404).send({
+      res.status(400).send({
         message:
           "게시글에 알 수 없는 문제가 발생했습니다. 관리자에게 문의해주세요.",
       });
@@ -97,8 +98,7 @@ router.put("/posts/detail/:postId/edit", async (req, res) => {
     const { postId } = req.params;
     const { songName, desc, singer, url, category1, category2, category3 } =
       req.body;
-    const posts = await Posts.find({ _id: postId });
-    console.log(posts);
+    const posts = await Posts.findOne({ _id: postId });
     if (posts.length) {
       await Posts.updateOne(
         { _id: postId },
@@ -152,7 +152,9 @@ router.post("/posts/detail/:postId/like", async (req, res) => {
     const { postId } = req.params;
     //테스트용 userId body로 받아보기
     const { userId } = req.body;
-    const posts = await Posts.find({ _id: postId, likeUser: userId });
+    const posts = await Posts.find({
+      $and: [{ _id: postId }, { likeUser: userId }],
+    });
 
     if (posts.length == 0) {
       await Posts.updateOne({ _id: postId }, { $push: { likeUser: userId } });
