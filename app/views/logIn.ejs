@@ -15,7 +15,7 @@
     ></script>
 
     <!-- 공용함수 호출 -->
-    <script src="/static/api.js"></script>
+    <!-- <script src="/static/api.js"></script> -->
 
   </head>
   
@@ -25,10 +25,10 @@
 
   <script>
 
-    if(localStorage.getItem("token")) {
-      alert("이미 로그인이 되어있습니다. 전체 목록으로 이동합니다.");
-      window.location.href='/main';
-      };
+    // if(localStorage.getItem("token")) {
+    //   alert("이미 로그인이 되어있습니다. 전체 목록으로 이동합니다.");
+    //   window.location.href='/main';
+    //   };
 
      function login() {
        let nickName = $('#login_nickName').val();
@@ -36,7 +36,7 @@
 
        $.ajax({
          type: "POST",
-         url: `/api/auth`,
+         url: `/api/users/login`,
          data: { nickName, pw },
          success: function (response) {
            if (response["result"] === "success") {

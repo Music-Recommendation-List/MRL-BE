@@ -25,73 +25,99 @@
 
   <script>
 
-    function checkAuth() {
-      if (localStorage.getItem('token')) {
-        alert('이미 로그인이 되어있습니다. 전체 목록으로 이동합니다.');
-        window.location.href = '/main';
-      }
-    }
+    // function checkAuth() {
+    //   if (localStorage.getItem('token')) {
+    //     alert('이미 로그인이 되어있습니다. 전체 목록으로 이동합니다.');
+    //     window.location.href = '/main';
+    //   }
+    // }
 
     $(document).ready(function () {
-        checkAuth();
+        //checkAuth();
     });
 
   
 
     function signUp() {
-        let nickName = $('#signUp_nick').val();
-        let pw = $('#signUp_pw').val();
-        let pwCheck = $('#signUp_pwCheck').val();
+        let userId = $('#signUp_nick').val();
+        let password = $('#signUp_pw').val();
+        let passwordConfirm = $('#signUp_pwCheck').val();
 
         $.ajax({
             type: "POST",
             url: `/api/users/signup`,
             data: {
-            nickName,
-            pw,
-            pwCheck,
+            userId,
+            password,
+            passwordConfirm,
             },
             success: function (response) {
-                alert(response.result);
-                return window.location.href='/users/login';
-            },
-            error: function (error) {
-                if (error.responseJSON.result === "nickNameUsed") {
-                    alert(error.responseJSON.errorMessage);
-                    return;
-                } else if (error.responseJSON.result === "pwCheckNotSamePw") {
-                    alert(error.responseJSON.errorMessage);
-                    return;
-                } else if (error.responseJSON.result === "pwOverlapNickName") {
-                    alert(error.responseJSON.errorMessage);
-                    return;
-                } else if (error.responseJSON.result === "valiationFailed") {
-                    alert(error.responseJSON.errorMessage);
-                    return;
-                }
-            }
-        });
-    }
-    
-    function checkNick() {
-        let nickName = $('#signUp_nick').val();
-        
-        $.ajax({
-            type: "POST",
-            url: `/api/users/signup/chek`,
-            data: {
-                nickName: nickName,
-            },
-            success: function (response) {
-                alert(response.successMessage);
+              console.log(response);
+              console.log(response.result);
+              console.log(response.errorMsg);
+              
+              if(response.result === "success"){
+                alert(response.successMsg);
                 return;
-            },
-            error: function (error) {
-                alert(error.responseJSON.errorMessage);
+              }
+              if(response.result === "valiationFailed"){
+                alert(response.errorMsg);
                 return;
+              }
+              if(response.result === "nickNameUsed"){
+                alert(response.errorMsg);
+                return;
+              }
+              if(response.result === "pwCheckNotSamePw"){
+                alert(response.errorMsg);
+                return;
+              }
+              if(response.result === "pwOverlapNickName"){
+                alert(response.errorMsg);
+                return;
+              }
+              return;
             }
         });
     };
+    
+              // },
+              // error: function (error) {
+              //     if (error.responseJSON.result === "nickNameUsed") {
+              //         alert(error.responseJSON.errorMessage);
+              //         return;
+              //     } else if (error.responseJSON.result === "pwCheckNotSamePw") {
+              //         alert(error.responseJSON.errorMessage);
+              //         return;
+              //     } else if (error.responseJSON.result === "pwOverlapNickName") {
+              //         alert(error.responseJSON.errorMessage);
+              //         return;
+              //     } else if (error.responseJSON.result === "valiationFailed") {
+              //         alert(error.responseJSON.errorMessage);
+              //         return;
+              //     }
+              // }
+  
+    
+    // function checkNick() {
+    //     let nickName = $('#signUp_nick').val();
+        
+    //     $.ajax({
+    //         type: "POST",
+    //         url: `/api/users/signup/chek`,
+    //         data: {
+    //             nickName: nickName,
+    //         },
+    //         success: function (response) {
+    //             alert(response.successMessage);
+    //             return;
+    //         },
+    //         error: function (error) {
+    //             alert(error.responseJSON.errorMessage);
+    //             return;
+    //         }
+    //     });
+    // };
 
 
   </script>
@@ -134,7 +160,7 @@
     회 원 가 입
   </button>
   <p></p>
-  <button onclick="window.location.href='/main'">
+  <button onclick="window.location.href='/signup'">
     로그인없이 이용
   </button>
   </body>

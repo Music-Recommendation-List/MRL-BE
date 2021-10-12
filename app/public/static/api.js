@@ -24,8 +24,3 @@ function getSelf(callback) {
     },
   });
 }
-
-function signOut() {
-  localStorage.clear();
-  window.location.href = '/';
-}
