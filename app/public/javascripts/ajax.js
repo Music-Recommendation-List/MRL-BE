@@ -55,10 +55,10 @@ console.log('gkkkk');
 
 //D
 
-$.ajax({
-  url: "/api/comment/6164f125fa9fb8fa7e4e9da8",
-  type: 'DELETE',
-  success: (data) => {
-    console.log(data);
-  }
-});
+// $.ajax({
+//   url: "/api/comment/6164f125fa9fb8fa7e4e9da8",
+//   type: 'DELETE',
+//   success: (data) => {
+//     console.log(data);
+//   }
+// });

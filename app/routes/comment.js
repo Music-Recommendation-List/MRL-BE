@@ -21,7 +21,7 @@ router.post('/comment/:postId', async (req, res) => {
     const { contents } = req.body;
     // const { userId } = res.locals;
     const date = new Date();
-    const userId = '힘들다';
+    const userId = 'kkkkk';
 
     console.log(postId);
     console.log(contents);
@@ -43,7 +43,7 @@ router.put('/comment/:commentId', async (req, res) => {
   const { commentId } = req.params;
   // const { userId } = res.locals;
   const { contents } = req.body;
-  const userId = '힘들다';
+  const userId = 'kkkkk';
 
   const isExist = await Comment.find({ commentId, userId });
 
@@ -61,7 +61,7 @@ router.put('/comment/:commentId', async (req, res) => {
 router.delete('/comment/:commentId', async (req, res) => {
   const { commentId } = req.params;
   // const { userId } = res.locals;
-  const userId = '힘들다';
+  const userId = 'kkkkk';
 
   console.log(userId);
   console.log(commentId);
