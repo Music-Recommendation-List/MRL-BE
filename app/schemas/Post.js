@@ -2,10 +2,21 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const PostSchema = new Schema({
-  songName: { type: String, required: true },
-  userId: { type: String, required: true },
-  desc: { type: String },
-  singer: { type: String, required: true },
+  songName: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  desc: {
+    type: String,
+  },
+  singer: {
+    type: String,
+    required: true,
+  },
   url: {
     type: String,
   },
