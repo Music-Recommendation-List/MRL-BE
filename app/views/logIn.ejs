@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Login Page</title>
+
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 공용함수 호출 -->
+    <script src="/static/authFnInPage.js"></script>
+
+  </head>
+  
+  <style>
+    
+  </style>
+
+  <script>
+
+    function checkAuth() {
+      if (localStorage.getItem('token')) {
+        alert('로그인이 되어있습니다. 기본 페이지로 이동합니다.');
+        return window.location.href = '/main';
+      }
+    };
+
+    $(document).ready(function () {
+        checkAuth();
+    });
+
+    
+
+     function login() {
+       let userId = $('#login_userId').val();
+       let password = $('#login_password').val();
+
+       $.ajax({
+         type: "POST",
+         url: `/api/users/login`,
+         data: { userId, password },
+         success: function (response) {
+           if (response.result === "success") {
+             localStorage.setItem("token", response.token); //.setItem 은 로컬스토리지에 저장하는 것의 키:벨류 를 정하기 가능
+              alert(response.userId);
+              alert(response.successMsg);
+              window.location.href='/main'; //기본페이지
+           } else if (response.result === "failure") {
+              alert(response.errorMsg);
+              return;
+           }
+         },
+      });
+     };
+     //  error: function(error) { 
+        //   // console.log(error);
+        //   alert(error.responseJSON.errorMessage);
+        //   return;
+        // }
+     
+
+
+  </script>
+  <body>
+    <h1>WELCOME TO VISIT THIS BOARD SITE</h1>
+    <h1>This page is login page!</h1>
+    <a> --------------------------------------------------- </a>
+  <p></p>
+  <div id="login">
+      <div id="id">
+         <label for="login_userId">
+            닉네임을 입력해 주세요
+         </label>
+         <p></p>
+         <input type="text" id="login_userId" style="height: 20px; width: 20%;" required>
+      </div>
+      <p></p>
+      <div id="password">
+          <label for="login_password">
+             비밀 번호를 입력해 주세요
+         </label>
+         <p></p>
+         <input type="password" id="login_password" style="height: 20px; width: 20%;" required>
+      </div>
+      <p></p>
+     <a> --------------------------------------------------- </a> 
+  <p></p>
+  <button onclick="login()">
+    로 그 인
+  </button>
+  <p></p>
+  <button onclick="window.location.href='/users/signup'">
+    회 원 가 입
+  </button>
+  <p></p>
+  <button onclick="window.location.href='/main'">
+    로그인 없이 이용
+  </button>
+  </body>
+</html>
