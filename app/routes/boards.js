@@ -4,7 +4,7 @@ const Posts = require("../schemas/Post");
 // const Comment = require("../schemas/Comment");
 
 //게시글 등록
-router.post("/post/write", async (req, res) => {
+router.post("/posts/write", async (req, res) => {
   try {
     // 로그인 유저 확인
     // const {userId } = res.locals.user;
@@ -38,12 +38,13 @@ router.post("/post/write", async (req, res) => {
       likeUser,
     });
     await posts.save();
-    res.status(201).send({ ok: true, results: posts });
+    res.status(200).send({ ok: true, result: posts, message: "음악을 저장했습니다!" });
   } catch (err) {
     //에러 발생 시 message 핸들링
     console.log(err);
     res.status(400).send({
-      message: "음악을 저장하는데 알 수 없는 문가 발생했습니다.",
+      ok: false,
+      message: "음악을 저장하는데 알 수 없는 문제가 발생했습니다.",
     });
   }
 });
@@ -58,10 +59,11 @@ router.post("/posts", async (req, res) => {
     const posts = await Posts.find({ $and: [query1, query2, query3] });
     console.log(posts.length);
 
-    res.status(201).send({ ok: true, results: posts });
+    res.status(201).send({ ok: true, result: posts });
   } catch (err) {
     //에러 발생 시 message 핸들링
     res.status(400).send({
+      ok: false,
       message: "음악을 불러오는데 알 수 없는 문제가 발생했습니다.",
     });
   }
@@ -72,14 +74,16 @@ router.get("/posts/detail/:postId", async (req, res) => {
   try {
     const { postId } = req.params;
     const posts = await Posts.findById(postId);
-    if (!posts) {
+    if (posts) {
+      res.send({ ok: true, result: posts });
+    }
+    else {
       // boards 정보가 없을 때
       res.status(400).send({
+        ok: false,
         message:
           "게시글에 알 수 없는 문제가 발생했습니다. 관리자에게 문의해주세요.",
       });
-    } else {
-      res.send({ ok: true, results: posts });
     }
   } catch (err) {
     //에러 발생 시 message 핸들링
@@ -98,26 +102,25 @@ router.put("/posts/detail/:postId/edit", async (req, res) => {
     const { postId } = req.params;
     const { songName, desc, singer, url, category1, category2, category3 } =
       req.body;
-    const posts = await Posts.findOne({ _id: postId });
-    if (posts.length) {
-      await Posts.updateOne(
-        { _id: postId },
-        {
-          $set: {
-            songName,
-            desc,
-            singer,
-            url,
-            category1,
-            category2,
-            category3,
-          },
-        }
-      );
-    }
-    res.send({ ok: true });
+    const posts = await Posts.findById(postId);
+    await posts.updateOne(
+      { _id: postId },
+      {
+        $set: {
+          songName,
+          desc,
+          singer,
+          url,
+          category1,
+          category2,
+          category3,
+        },
+      }
+    );
+    res.send({ ok: true, message: "게시글을 수정했습니다" });
   } catch (err) {
     res.status(400).send({
+      ok: false,
       message: "게시글을 수정하는데 알 수 없는 문제가 발생했습니다.",
     });
   }
@@ -129,17 +132,18 @@ router.delete("/posts/detail/:postId/edit", async (req, res) => {
     // 로그인 유저 확인
     // const { userId } = res.locals.user;
     const { postId } = req.params;
-    const posts = await Posts.findOne({ _id: postId });
-    if (posts.length) {
-      await Posts.deleteOne({ _id: postId });
-    }
+    const posts = await Posts.findById(postId);
+    await posts.deleteOne();
     // const isComment = await Comment.findById(postId);
     // if (isComment.length > 0) {
     //   await Comment.deleteMany({ postId });
     // }
-    res.send({ ok: true });
+    res.send({
+      ok: true, message: "게시글을 삭제했습니다.",
+    });
   } catch (err) {
     res.status(400).send({
+      ok: false,
       message: "게시글을 삭제하는데 알 수 없는 문제가 발생했습니다.",
     });
   }
@@ -161,11 +165,13 @@ router.post("/posts/detail/:postId/like", async (req, res) => {
       res.send({ ok: true });
     } else {
       res.send({
+        ok: false,
         message: "좋아요는 한번만 누를 수 있습니다.",
       });
     }
   } catch (err) {
     res.status(400).send({
+      ok: false,
       message: "게시글에 좋아요를 반영하는데 알 수 없는 문제가 발생했습니다.",
     });
   }
@@ -184,11 +190,13 @@ router.delete("/posts/detail/:postId/like", async (req, res) => {
       res.send({ ok: true });
     } else {
       res.send({
+        ok: false,
         message: "좋아요 취소는 좋아요를 누른 상태에서만 실행 가능합니다",
       });
     }
   } catch (err) {
     res.status(400).send({
+      ok: false,
       message: "게시글에 좋아요를 반영하는데 알 수 없는 문제가 발생했습니다.",
     });
   }

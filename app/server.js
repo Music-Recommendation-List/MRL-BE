@@ -10,9 +10,6 @@ const commentRouter = require('./routes/comment');
 
 const app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // app.set('view engine', 'pug');
@@ -23,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 //boards 라우터 연결
-app.use("/api", boardsRouter);
 app.use('/', indexRouter);
+app.use("/api", boardsRouter);
 app.use('/api', usersRouter);
 app.use('/api', commentRouter);
 

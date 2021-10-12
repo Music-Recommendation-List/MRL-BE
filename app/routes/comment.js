@@ -31,7 +31,7 @@ router.post('/comment/:postId', async (req, res) => {
       postId, contents, userId, date,
     });
     res.send({
-      ok: true, result: "commentCreate", message: '댓글이 작성되었습니다.'
+      ok: true, message: '댓글이 작성되었습니다.'
     });
   } catch (error) {
     res.status(400).send({ ok: false, message: '댓글 작성에 실패했습니다' });
@@ -52,7 +52,7 @@ router.put('/comment/:commentId', async (req, res) => {
       { commentId, userId },
       { $set: { contents } },
     );
-    res.send({ ok: true, "result": "commentUpdate", message: '댓글을 수정했습니다' });
+    res.send({ ok: true, message: '댓글을 수정했습니다' });
     return;
   }
   res.state(400).send({ ok: false, message: '댓글 수정에 실패했습니다' });
@@ -69,7 +69,7 @@ router.delete('/comment/:commentId', async (req, res) => {
     const isExist = await Comment.findOne({ commentId, userId });
     if (isExist) {
       await Comment.deleteOne({ commentId });
-      res.send({ ok: true, result: "commentRemove", message: '댓글이 삭제되었습니다.' });
+      res.send({ ok: true, message: '댓글이 삭제되었습니다.' });
     }
   } catch (error) {
     res.status(400).send({ ok: false, message: '댓글 삭제에 실패했습니다' });
