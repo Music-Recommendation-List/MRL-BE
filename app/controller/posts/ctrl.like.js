@@ -48,7 +48,8 @@ const likeProcess = {
     } catch (err) {
       res.status(400).send({
         ok: false,
-        message: "게시글에 좋아요를 반영하는데 알 수 없는 문제가 발생했습니다.",
+        message:
+          "게시글에 좋아요 취소를 반영하는데 알 수 없는 문제가 발생했습니다.",
       });
     }
   },
