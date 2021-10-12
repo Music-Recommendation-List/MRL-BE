@@ -55,7 +55,7 @@ router.post("/posts", async (req, res) => {
     const query1 = category1 === undefined ? {} : { category1: category1 };
     const query2 = category2 === undefined ? {} : { category2: category2 };
     const query3 = category3 === undefined ? {} : { category3: category3 };
-    const posts = await Posts.find({ $and: [query1, { query2 }, query3] });
+    const posts = await Posts.find({ $and: [query1, query2, query3] });
     console.log(posts.length);
 
     res.status(201).send({ ok: true, results: posts });
