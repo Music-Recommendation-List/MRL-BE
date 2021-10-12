@@ -11,7 +11,7 @@ function getSelf(callback) {
       authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     success: function (response) {
-      callback(response.user); //user정보가 있다는 것을 확인 완료
+      callback(response.targetUserInfo); //user정보가 있다는 것을 확인 완료
     },
     error: function (xhr, status, error) {
       if (status == 401) {
@@ -20,7 +20,12 @@ function getSelf(callback) {
         localStorage.clear();
         alert('알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.');
       }
-      window.location.href = '/';
+      window.location.href = '/login';
     },
   });
-}
+};
+
+function signOut() {
+  localStorage.clear();
+  window.location.href = '/login';
+};

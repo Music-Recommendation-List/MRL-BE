@@ -18,12 +18,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', usersRouter);
 
+//지워야할 것
 app.use('/login', (req, res) => {
   return res.render('logIn');
 });
 
+//지워야할 것
 app.use('/signup', (req, res) => {
   return res.render('signUp');
+});
+
+//지워야할 것
+app.use('/main', (req, res) => {
+  return res.render('mainTest');
 });
 
 // catch 404 and forward to error handler

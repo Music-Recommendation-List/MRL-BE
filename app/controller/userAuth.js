@@ -1,5 +1,5 @@
 exports.userAuthController = async (req, res) => {
-  const { userInform } = res.locals;
-  // console.log(user);
-  res.send({ userInform });
+  const { targetUserInfo } = res.locals;
+  console.log(targetUserInfo, "여기도 지나간다!!!");
+  res.send({ targetUserInfo });
 };
