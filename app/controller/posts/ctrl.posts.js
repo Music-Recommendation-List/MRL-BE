@@ -1,5 +1,5 @@
 const Posts = require("../../schemas/Post");
-// const Comment = require("../../schemas/Comment");
+const Comment = require("../../schemas/Comment");
 
 const getProcess = {
   //게시글 조회
@@ -51,12 +51,11 @@ const postProcess = {
   writePost: async (req, res) => {
     try {
       // 로그인 유저 확인
-      // const {userId } = res.locals.user;
+      const { userId } = res.locals.targetUserInfo;
       //body에 저장값을 받음
       const {
         postId,
         songName,
-        userId,
         desc,
         singer,
         url,
@@ -98,8 +97,6 @@ const postProcess = {
   //게시글 수정
   editPost: async (req, res) => {
     try {
-      // 로그인 유저 확인
-      // const { userId } = res.locals.user;
       const { postId } = req.params;
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
@@ -129,13 +126,11 @@ const postProcess = {
   //게시글 삭제
   deletePost: async (req, res) => {
     try {
-      // 로그인 유저 확인
-      // const { userId } = res.locals.user;
       const { postId } = req.params;
       const posts = await Posts.findById(postId);
       await posts.deleteOne();
-      // const isComment = await Comment.findById(postId);
-      // await isComment.deleteMany({ postId });
+      const isComment = await Comment.findById(postId);
+      await isComment.deleteMany({ postId });
       res.send({
         ok: true,
         message: "게시글을 삭제했습니다.",

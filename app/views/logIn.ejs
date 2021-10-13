@@ -47,10 +47,10 @@
          url: `/api/users/login`,
          data: { userId, password },
          success: function (response) {
+          localStorage.setItem("token", response.result.token); //.setItem 은 로컬스토리지에 저장하는 것의 키:벨류 를 정하기 가능
+              // console.log(response.result.token);
            if (response.result === "success") {
-             localStorage.setItem("token", response.token); //.setItem 은 로컬스토리지에 저장하는 것의 키:벨류 를 정하기 가능
-              alert(response.userId);
-              alert(response.successMsg);
+            alert(response.successMsg);
               window.location.href='/main'; //기본페이지
            } else if (response.result === "failure") {
               alert(response.errorMsg);

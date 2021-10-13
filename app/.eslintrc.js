@@ -9,10 +9,10 @@ module.exports = {
     ecmaVersion: 13,
   },
   rules: {
-    "indent": ["error", 2],
+    indent: ["error", 2],
     "linebreak-style": ["off"],
-    "quotes": ["off"],
-    "semi": ["off"],
+    quotes: ["off"],
+    semi: ["off"],
     "comma-dangle": ["error", "never"],
   },
 };

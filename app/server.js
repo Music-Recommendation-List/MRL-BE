@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 
-const postsRouter = require("./routes/boards");
+const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
 const commentRouter = require("./routes/comment");
 
