@@ -10,7 +10,6 @@ const getProcess = {
       const query2 = category2 === undefined ? {} : { category2: category2 };
       const query3 = category3 === undefined ? {} : { category3: category3 };
       const posts = await Posts.find({ $and: [query1, query2, query3] });
-
       res.status(201).send({ ok: true, result: posts });
     } catch (err) {
       //에러 발생 시 message 핸들링
