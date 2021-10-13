@@ -2,12 +2,16 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
+const cors = require("cors");
+const helmet = require("helmet");
 
 const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
 const commentRouter = require("./routes/comment");
 
 const app = express();
+app.use(cors());
+app.use(helmet());
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
