@@ -1,6 +1,6 @@
 const userAuthController = async (req, res) => {
   const { targetUserInfo } = res.locals;
-  console.log(targetUserInfo, "여기도 지나간다!!!");
+  console.log(targetUserInfo);
   res.send({ targetUserInfo });
 };
 

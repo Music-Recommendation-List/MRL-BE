@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const authMW = require("../middlewares/authMW");
-const logInFn = require("../controller/users/logIn");
-const signUpFn = require("../controller/users/signUp");
-const userAuthController = require("../controller/users/userAuth");
+const logInFn = require("../controller/users/ctrl.logIn");
+const signUpFn = require("../controller/users/ctrl.signUp");
+const userAuthController = require("../controller/users/ctrl.userAuth");
 
 //로그인 API
 router.post("/users/login", logInFn);
