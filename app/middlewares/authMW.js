@@ -16,10 +16,10 @@ const authMW = (req, res, next) => {
 
   try {
     const targetUserId = Jwt.verify(tokenValue, process.env.JWT_SECRET_TOKEN);
-    console.log(targetUserId, targetUserId.userId, "여기!");
+    console.log(targetUserId, targetUserId.userId);
     User.findOne({ userId: targetUserId.userId }).then((targetUserInfo) => {
       res.locals.targetUserInfo = targetUserInfo; //locals는 데이터에서 사용자가 마음대로 사용할 수 있는 공간..
-      console.log(res.locals.targetUserInfo, "여기여기!")
+      console.log(res.locals.targetUserInfo);
       next();
     });
   } catch (error) {

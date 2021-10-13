@@ -10,9 +10,17 @@ const logInFn = async (req, res) => {
   console.log(req.body);
   const { userId, password } = req.body;
 
-  const isUser = await User.findOne({ userId, password });
+  const isUser = await User.findOne({ userId });
   console.log(isUser);
-  if (isUser) {
+  if (!isUser || !bcrypt.compareSync(password, user.password)) {
+    console.log('유저확인 실패');
+    console.log('로그인 실패');
+    return res.status(200).send({
+      ok: false,
+      message: '잘못된 아이디 또는 패스워드입니다.',
+    });
+  }
+
     console.log('유저확인 완료');
     console.log('로그인 진행');
 
@@ -26,17 +34,8 @@ const logInFn = async (req, res) => {
           token: token,
           userId: userId,
         },
-        message: '로그인 성공!',
+        message: '로그인에 성공하셨습니다.',
       });
-  } else {
-    console.log('유저확인 실패');
-    console.log('로그인 실패');
-    return res.status(200).send({
-      ok: false,
-      result: 'failure',
-      message: '로그인 실패!',
-    });
-  }
 };
 
 module.exports = logInFn;
