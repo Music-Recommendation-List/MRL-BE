@@ -42,7 +42,6 @@
         let userId = $('#signUp_nick').val();
         let password = $('#signUp_pw').val();
         let passwordConfirm = $('#signUp_pwCheck').val();
-
         $.ajax({
             type: "POST",
             url: `/api/users/signup`,

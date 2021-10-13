@@ -1,16 +1,16 @@
-const Jwt = require('jsonwebtoken');
-const User = require('../schemas/User');
-const dotenv = require('dotenv');
+const Jwt = require("jsonwebtoken");
+const User = require("../schemas/User");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const authMW = (req, res, next) => {
   const { authorization } = req.headers;
-  const [tokenType, tokenValue] = authorization.split(' ');
+  const [tokenType, tokenValue] = authorization.split(" ");
 
-  if (tokenType !== 'Bearer') {
+  if (tokenType !== "Bearer") {
     return res.status(200).send({
       ok: false,
-      message: '로그인 후 사용하세요.',
+      message: "로그인 후 사용하세요.",
     });
   }
 
@@ -25,7 +25,7 @@ const authMW = (req, res, next) => {
   } catch (error) {
     res.status(200).send({
       ok: false,
-      message: '로그인 후 사용하세요.',
+      message: "로그인 후 사용하세요.",
     });
     return;
   }

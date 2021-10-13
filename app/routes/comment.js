@@ -1,17 +1,15 @@
 const express = require("express");
-const Comment = require('../schemas/Comment');
-const ctrlComment = require('../controller/comments/ctrl.comments');
+const ctrlComment = require("../controller/comments/ctrl.comments");
+const authMW = require("../middlewares/authMW");
 
 const router = express.Router();
 
-router.get('/comment/:postId', ctrlComment.commentList);
+router.get("/comment/:postId", ctrlComment.commentList);
 
-router.post('/comment/:postId', ctrlComment.commentWrite);
+router.post("/comment/:postId", authMW, ctrlComment.commentWrite);
 
+router.put("/comment/:commentId", authMW, ctrlComment.commentUpdate);
 
-router.put('/comment/:commentId', ctrlComment.commentUpdate);
-
-router.delete('/comment/:commentId', ctrlComment.commentDelete);
-
+router.delete("/comment/:commentId", authMW, ctrlComment.commentDelete);
 
 module.exports = router;
