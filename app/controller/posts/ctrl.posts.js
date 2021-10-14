@@ -50,24 +50,16 @@ const postProcess = {
   writePost: async (req, res) => {
     try {
       // 로그인 유저 확인
-      const { userId } = res.locals.targetUserInfo;
+      // const { userId } = res.locals.targetUserInfo;
+      // console.log("userId =", userId);
       //body에 저장값을 받음
-      const {
-        postId,
-        songName,
-        desc,
-        singer,
-        url,
-        date,
-        category1,
-        category2,
-        category3,
-        likeUser,
-      } = req.body;
+      const { songName, desc, singer, url, category1, category2, category3 } =
+        req.body;
+      const userId = "abcd";
+      date = new Date();
       //db에 저장
-
+      console.log("req.body =", req.body);
       const posts = new Posts({
-        postId,
         songName,
         userId,
         desc,
@@ -77,9 +69,9 @@ const postProcess = {
         category1,
         category2,
         category3,
-        likeUser,
       });
       await posts.save();
+      console.log("db 저장완료");
       res
         .status(200)
         .send({ ok: true, result: posts, message: "음악을 저장했습니다!" });
