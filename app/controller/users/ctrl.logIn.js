@@ -11,7 +11,8 @@ const logInFn = async (req, res) => {
   const { userId, password } = req.body;
 
   const isUser = await User.findOne({ userId });
-  console.log(isUser);
+  console.log(isUser, "여기는 완료!");
+
   if (!isUser || !bcrypt.compareSync(password, isUser.password)) {
     console.log("유저확인 실패");
     console.log("로그인 실패");
@@ -19,6 +20,7 @@ const logInFn = async (req, res) => {
       ok: false,
       message: "잘못된 아이디 또는 패스워드입니다.",
     });
+    return;
   }
 
   console.log("유저확인 완료");
