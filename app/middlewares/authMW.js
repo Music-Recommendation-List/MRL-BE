@@ -4,10 +4,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authMW = (req, res, next) => {
+  console.log("미들웨어 입장");
   const { authorization } = req.headers;
   const [tokenType, tokenValue] = authorization.split(" ");
-
+  console.log("토큰을 비교할꺼에요");
   if (tokenType !== "Bearer") {
+    console.log("토큰이 틀렷다고 합니다 이만 종료");
     return res.status(200).send({
       ok: false,
       message: "로그인 후 사용하세요.",
@@ -20,6 +22,7 @@ const authMW = (req, res, next) => {
     User.findOne({ userId: targetUserId.userId }).then((targetUserInfo) => {
       res.locals.targetUserInfo = targetUserInfo; //locals는 데이터에서 사용자가 마음대로 사용할 수 있는 공간..
       console.log(res.locals.targetUserInfo);
+      console.log("미들웨어 퇴장");
       next();
     });
   } catch (error) {
