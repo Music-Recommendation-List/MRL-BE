@@ -33,9 +33,6 @@ const PostSchema = new Schema({
   category3: {
     type: String,
   },
-  likeUser: {
-    type: Array,
-  },
 });
 
 PostSchema.virtual("postId").get(function () {
