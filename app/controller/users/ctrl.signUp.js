@@ -1,10 +1,9 @@
-const User = require("../../schemas/User");
-const signSchema = require("../../schemas/joi");
+const { User } = require("../../models");
+const signSchema = require("../../models/joi/joi");
 const bcrypt = require("bcrypt");
 
-// 회원가입 컨트롤러
+// 회원가입 컨롤러
 const signUpFn = async (req, res) => {
-  console.log(req.body);
   const { userId, password, passwordConfirm } = req.body;
 
   try {
@@ -19,12 +18,11 @@ const signUpFn = async (req, res) => {
   }
 
   //bcrypt를 통한 패스워드 단방향 암호화
-  const encryptedPassowrd = bcrypt.hashSync(password, 10)
+  const encryptedPassowrd = bcrypt.hashSync(password, 10);
 
   //아이디 중복검사
-  const isUser = await User.findOne({ userId });
-  console.log(isUser);
-  if (isUser) {
+  const user = await User.findOne({ where: { userId } });
+  if (user) {
     console.log("다른 아이디가 필요합니다!");
     return res.status(400).send({
       ok: false,
@@ -50,9 +48,11 @@ const signUpFn = async (req, res) => {
   }
 
   // 모든 검증을 통과하여 회원 생성
-  console.log("여기까지 내려오나?");
-  await User.create({ userId: userId, password: encryptedPassowrd, date: new Date() });
-  console.log("회원 생성 완료");
+  await User.create({
+    userId: userId,
+    password: encryptedPassowrd,
+    date: new Date(),
+  });
   return res.status(200).send({
     ok: true,
     message: "회원가입에 성공하였습니다.",

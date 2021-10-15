@@ -56,15 +56,13 @@ const postProcess = {
   writePost: async (req, res) => {
     try {
       // 로그인 유저 확인
-      // const { userId } = res.locals.targetUserInfo;
-      // console.log("userId =", userId);
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       //body에 저장값을 받음
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
-      const userId = "abcd";
       date = new Date();
       //db에 저장
-      console.log("req.body =", req.body);
       const post = await Post.create({
         songName,
         userId,
@@ -93,11 +91,13 @@ const postProcess = {
   //게시글 수정
   editPost: async (req, res) => {
     try {
-      console.log("3");
+      // 로그인 유저 확인
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       const { postId } = req.params;
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
-      console.log("3");
+
       await Post.update(
         {
           songName,
@@ -124,6 +124,9 @@ const postProcess = {
   //게시글 삭제
   deletePost: async (req, res) => {
     try {
+      // 로그인 유저 확인
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       const { postId } = req.params;
       const post = await Post.findByPk(postId);
       await post.destroy({
