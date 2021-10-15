@@ -56,11 +56,7 @@ const postProcess = {
   writePost: async (req, res) => {
     console.log("hihi");
     try {
-<<<<<<< HEAD
-      console.log("데이터를 이제 받아서 db에 접근해볼께요");
-=======
       console.log("트라이캐치 들어옴");
->>>>>>> dev
       // 로그인 유저 확인
       const { userId } = res.locals.targetUserInfo;
       console.log("userId:", userId);
