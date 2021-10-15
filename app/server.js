@@ -4,6 +4,9 @@ const path = require("path");
 const logger = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
+//swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger-output");
 
 const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
@@ -12,6 +15,8 @@ const commentRouter = require("./routes/comment");
 const app = express();
 app.use(cors());
 app.use(helmet());
+//swagger
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
