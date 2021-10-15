@@ -54,7 +54,9 @@ const getProcess = {
 const postProcess = {
   //게시글 등록
   writePost: async (req, res) => {
+    console.log("hihi");
     try {
+      console.log("트라이캐치 들어옴");
       // 로그인 유저 확인
       const { userId } = res.locals.targetUserInfo;
       console.log("userId:", userId);
@@ -63,6 +65,7 @@ const postProcess = {
         req.body;
       date = new Date();
       //db에 저장
+      console.log("저장전!");
       const post = await Post.create({
         songName,
         userId,
