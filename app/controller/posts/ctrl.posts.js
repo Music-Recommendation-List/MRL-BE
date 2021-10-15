@@ -55,6 +55,7 @@ const postProcess = {
   //게시글 등록
   writePost: async (req, res) => {
     try {
+      console.log("데이터를 이제 받아서 db에 접근해볼께요");
       // 로그인 유저 확인
       const { userId } = res.locals.targetUserInfo;
       console.log("userId:", userId);
