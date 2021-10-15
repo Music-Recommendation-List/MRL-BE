@@ -1,4 +1,5 @@
-const Posts = require("../../schemas/Post");
+const { Post } = require("../../models");
+const { Op } = require("sequelize");
 const Comment = require("../../schemas/Comment");
 
 const getProcess = {
@@ -9,8 +10,13 @@ const getProcess = {
       const query1 = category1 === undefined ? {} : { category1: category1 };
       const query2 = category2 === undefined ? {} : { category2: category2 };
       const query3 = category3 === undefined ? {} : { category3: category3 };
-      const posts = await Posts.find({ $and: [query1, query2, query3] });
-      res.status(201).send({ ok: true, result: posts });
+      const post = await Post.findAll({
+        order: [["date", "DESC"]],
+        where: {
+          [Op.and]: [query1, query2, query3],
+        },
+      });
+      res.status(201).send({ ok: true, result: post });
     } catch (err) {
       //에러 발생 시 message 핸들링
       res.status(400).send({
@@ -24,9 +30,9 @@ const getProcess = {
   detailPost: async (req, res) => {
     try {
       const { postId } = req.params;
-      const posts = await Posts.findById(postId);
-      if (posts) {
-        res.send({ ok: true, result: posts });
+      const post = await Post.findByPk(postId);
+      if (post) {
+        res.send({ ok: true, result: post });
       } else {
         // boards 정보가 없을 때
         res.status(400).send({
@@ -50,16 +56,14 @@ const postProcess = {
   writePost: async (req, res) => {
     try {
       // 로그인 유저 확인
-      // const { userId } = res.locals.targetUserInfo;
-      // console.log("userId =", userId);
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       //body에 저장값을 받음
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
-      const userId = "abcd";
       date = new Date();
       //db에 저장
-      console.log("req.body =", req.body);
-      const posts = new Posts({
+      const post = await Post.create({
         songName,
         userId,
         desc,
@@ -70,11 +74,10 @@ const postProcess = {
         category2,
         category3,
       });
-      await posts.save();
       console.log("db 저장완료");
       res
         .status(200)
-        .send({ ok: true, result: posts, message: "음악을 저장했습니다!" });
+        .send({ ok: true, result: post, message: "음악을 저장했습니다!" });
     } catch (err) {
       //에러 발생 시 message 핸들링
       console.log(err);
@@ -88,21 +91,25 @@ const postProcess = {
   //게시글 수정
   editPost: async (req, res) => {
     try {
+      // 로그인 유저 확인
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       const { postId } = req.params;
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
-      await Posts.updateOne(
-        { _id: postId },
+
+      await Post.update(
         {
-          $set: {
-            songName,
-            desc,
-            singer,
-            url,
-            category1,
-            category2,
-            category3,
-          },
+          songName,
+          desc,
+          singer,
+          url,
+          category1,
+          category2,
+          category3,
+        },
+        {
+          where: { postId: postId },
         }
       );
       res.send({ ok: true, message: "게시글을 수정했습니다" });
@@ -117,11 +124,15 @@ const postProcess = {
   //게시글 삭제
   deletePost: async (req, res) => {
     try {
+      // 로그인 유저 확인
+      const { userId } = res.locals.targetUserInfo;
+      console.log("userId:", userId);
       const { postId } = req.params;
-      const posts = await Posts.findById(postId);
-      await posts.deleteOne();
-      const isComment = await Comment.findById(postId);
-      await isComment.deleteMany({ postId });
+      const post = await Post.findByPk(postId);
+      await post.destroy({
+        where: { postId: postId },
+      });
+
       res.send({
         ok: true,
         message: "게시글을 삭제했습니다.",
