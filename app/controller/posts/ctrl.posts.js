@@ -9,7 +9,9 @@ const getProcess = {
       const query1 = category1 === undefined ? {} : { category1: category1 };
       const query2 = category2 === undefined ? {} : { category2: category2 };
       const query3 = category3 === undefined ? {} : { category3: category3 };
-      const posts = await Posts.find({ $and: [query1, query2, query3] });
+      const posts = await Posts.find({ $and: [query1, query2, query3] }).sort(
+        "-date"
+      );
       res.status(201).send({ ok: true, result: posts });
     } catch (err) {
       //에러 발생 시 message 핸들링
@@ -49,6 +51,7 @@ const postProcess = {
   //게시글 등록
   writePost: async (req, res) => {
     try {
+      console.log("데이터를 이제 받아서 db에 접근해볼께요");
       // 로그인 유저 확인
       // const { userId } = res.locals.targetUserInfo;
       // console.log("userId =", userId);
@@ -70,6 +73,7 @@ const postProcess = {
         category2,
         category3,
       });
+      console.log("posts: ", posts);
       await posts.save();
       console.log("db 저장완료");
       res
