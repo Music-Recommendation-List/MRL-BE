@@ -54,8 +54,13 @@ const getProcess = {
 const postProcess = {
   //게시글 등록
   writePost: async (req, res) => {
+    console.log("hihi");
     try {
+<<<<<<< HEAD
       console.log("데이터를 이제 받아서 db에 접근해볼께요");
+=======
+      console.log("트라이캐치 들어옴");
+>>>>>>> dev
       // 로그인 유저 확인
       const { userId } = res.locals.targetUserInfo;
       console.log("userId:", userId);
@@ -64,6 +69,7 @@ const postProcess = {
         req.body;
       date = new Date();
       //db에 저장
+      console.log("저장전!");
       const post = await Post.create({
         songName,
         userId,
@@ -98,22 +104,29 @@ const postProcess = {
       const { postId } = req.params;
       const { songName, desc, singer, url, category1, category2, category3 } =
         req.body;
-
-      await Post.update(
-        {
-          songName,
-          desc,
-          singer,
-          url,
-          category1,
-          category2,
-          category3,
-        },
-        {
-          where: { postId: postId },
-        }
-      );
-      res.send({ ok: true, message: "게시글을 수정했습니다" });
+      const post = await Post.findByPk(postId);
+      if (userId == post.userId) {
+        await Post.update(
+          {
+            songName,
+            desc,
+            singer,
+            url,
+            category1,
+            category2,
+            category3,
+          },
+          {
+            where: { postId: postId },
+          }
+        );
+        res.send({ ok: true, message: "게시글을 수정했습니다" });
+      } else {
+        res.send({
+          ok: false,
+          message: "작성자만 사용 가능한 기능입니다.",
+        });
+      }
     } catch (err) {
       res.status(400).send({
         ok: false,
@@ -127,17 +140,22 @@ const postProcess = {
     try {
       // 로그인 유저 확인
       const { userId } = res.locals.targetUserInfo;
-      console.log("userId:", userId);
       const { postId } = req.params;
       const post = await Post.findByPk(postId);
-      await post.destroy({
-        where: { postId: postId },
-      });
-
-      res.send({
-        ok: true,
-        message: "게시글을 삭제했습니다.",
-      });
+      if (userId == post.userId) {
+        await post.destroy({
+          where: { postId: postId },
+        });
+        res.send({
+          ok: true,
+          message: "게시글을 삭제했습니다.",
+        });
+      } else {
+        res.send({
+          ok: false,
+          message: "작성자만 사용 가능한 기능입니다.",
+        });
+      }
     } catch (err) {
       res.status(400).send({
         ok: false,
