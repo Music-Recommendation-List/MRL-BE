@@ -16,7 +16,14 @@ const getProcess = {
           [Op.and]: [query1, query2, query3],
         },
       });
-      res.status(201).send({ ok: true, result: post });
+      if (post.length == 0) {
+        res.status(400).send({
+          ok: false,
+          message: "검색하신 카테고리에 대한 음악이 없습니다.",
+        });
+      } else {
+        res.status(201).send({ ok: true, result: post });
+      }
     } catch (err) {
       //에러 발생 시 message 핸들링
       res.status(400).send({

@@ -22,7 +22,6 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "client")));
 
 // 라우터 연결
