@@ -19,6 +19,10 @@ http://3.34.44.44/
 - Front-end(React): 류승환, 김기철, 박새봄
 - Back-end(Node.js): 장재원, 김영우, 임성찬
 
+## 🌎 API
+
+https://www.notion.so/5e1322440c5049f1806615dd1ee1cf4c?v=8bce2554108043539cc4bd58852e0f37
+
 ## 📖 주요 라이브러리
 
 | 라이브러리   | 설명 |
@@ -33,10 +37,6 @@ http://3.34.44.44/
 | bcrypt       |      |
 | helmet       |      |
 | morgan       |      |
-
-## 🌎 API
-
-https://www.notion.so/5e1322440c5049f1806615dd1ee1cf4c?v=8bce2554108043539cc4bd58852e0f37
 
 ## ✨ 주요 기능
 
