@@ -4,6 +4,11 @@ const path = require("path");
 const logger = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
+// const csp = require("helmet-csp");
+const csp = require("helmet-csp");
+const crypto = require("crypto");
+
+
 
 const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
@@ -11,16 +16,20 @@ const commentRouter = require("./routes/comment");
 
 const app = express();
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
+app.use( helmet({ contentSecurityPolicy: false, }) );
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+
+
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "ejs");
 // app.set('view engine', 'pug');
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client")));
 
 // 라우터 연결
 app.use("/api", postsRouter);
@@ -28,18 +37,8 @@ app.use("/api", usersRouter);
 app.use("/api", commentRouter);
 
 //지워야할 것
-app.use("/login", (req, res) => {
-  return res.render("logIn");
-});
-
-//지워야할 것
-app.use("/signup", (req, res) => {
-  return res.render("signUp");
-});
-
-//지워야할 것
-app.use("/main", (req, res) => {
-  return res.render("mainTest");
+app.use("/", (req, res) => {
+  return res.send(express.static(path.join(__dirname, "client/index.html")));
 });
 
 // catch 404 and forward to error handler
