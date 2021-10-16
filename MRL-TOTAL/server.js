@@ -5,6 +5,10 @@ const logger = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 // const csp = require("helmet-csp");
+const csp = require("helmet-csp");
+const crypto = require("crypto");
+
+
 
 const postsRouter = require("./routes/posts");
 const usersRouter = require("./routes/users");
@@ -13,7 +17,9 @@ const commentRouter = require("./routes/comment");
 const app = express();
 app.use(cors());
 // app.use(helmet());
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use( helmet({ contentSecurityPolicy: false, }) );
+
+
 
 // app.set("views", path.join(__dirname, "views"));
 // app.set("view engine", "ejs");

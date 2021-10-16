@@ -16,7 +16,6 @@ const logInFn = async (req, res) => {
       ok: false,
       message: "잘못된 아이디 또는 패스워드입니다.",
     });
-    return;
   }
 
   //회원정보 암호화
