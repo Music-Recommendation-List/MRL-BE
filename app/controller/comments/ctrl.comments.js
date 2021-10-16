@@ -1,32 +1,27 @@
-const Comment = require("../../schemas/Comment");
+const { Comment } = require("../../models");
+const { Op } = require("sequelize");
 
 const ctrlComment = {
   commentList: async (req, res) => {
     const { postId } = req.params;
-    const comments = await Comment.find({ postId }).sort("-date");
-
-    console.log(postId);
-    console.log("comments.length : " + comments.length);
+    const comments = await Comment.findAll({
+      order: [["date", "DESC"]],
+      where: { postId },
+    });
 
     res.send({ ok: true, result: comments });
   },
 
   commentWrite: async (req, res) => {
-    console.log(1);
     try {
       const { postId } = req.params;
       const { contents } = req.body;
       const { userId } = res.locals.targetUserInfo;
       const date = new Date();
-
-      console.log(postId);
-      console.log(contents);
-      console.log(userId);
-
       await Comment.create({
         postId,
-        contents,
         userId,
+        contents,
         date,
       });
       res.send({
@@ -42,30 +37,35 @@ const ctrlComment = {
     const { commentId } = req.params;
     const { userId } = res.locals.targetUserInfo;
     const { contents } = req.body;
-
-    const isExist = await Comment.find({ commentId, userId });
-
-    if (isExist) {
-      await Comment.updateOne({ commentId, userId }, { $set: { contents } });
-      res.send({ ok: true, message: "댓글을 수정했습니다" });
-      return;
+    const comment = await Comment.findByPk(commentId);
+    if (userId == comment.userId) {
+      await Comment.update({ contents }, { where: { commentId } });
+      res.send({
+        ok: true,
+        message: "댓글이 수정되었습니다.",
+      });
+    } else {
+      res
+        .status(400)
+        .send({ ok: false, message: "댓글 작성자만 사용 가능한 기능입니다." });
     }
-    res.state(400).send({ ok: false, message: "댓글 수정에 실패했습니다" });
   },
 
   commentDelete: async (req, res) => {
     const { commentId } = req.params;
     const { userId } = res.locals.targetUserInfo;
-    const { contents } = req.body;
-
-    const isExist = await Comment.find({ commentId, userId });
-
-    if (isExist) {
-      await Comment.updateOne({ commentId, userId }, { $set: { contents } });
-      res.send({ ok: true, message: "댓글을 수정했습니다" });
-      return;
+    const comment = await Comment.findByPk(commentId);
+    if (userId == comment.userId) {
+      await Comment.destroy({ where: { commentId } });
+      res.send({
+        ok: true,
+        message: "댓글이 삭제되었습니다.",
+      });
+    } else {
+      res
+        .status(400)
+        .send({ ok: false, message: "댓글 작성자만 사용 가능한 기능입니다." });
     }
-    res.state(400).send({ ok: false, message: "댓글 수정에 실패했습니다" });
   },
 };
 

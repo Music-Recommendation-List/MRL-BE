@@ -5,8 +5,6 @@ dotenv.config();
 
 const authMW = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log("시작");
-  console.log(authorization);
   const [tokenType, tokenValue] = authorization.split(" ");
   if (tokenType !== "Bearer") {
     return res.status(200).send({
@@ -20,8 +18,6 @@ const authMW = (req, res, next) => {
     User.findOne({ where: { userId: targetUserId.userId } }).then(
       (targetUserInfo) => {
         res.locals.targetUserInfo = targetUserInfo; //locals는 데이터에서 사용자가 마음대로 사용할 수 있는 공간..
-        console.log("res.locals.targetUserInfo: ", res.locals.targetUserInfo);
-        console.log("미들웨어 퇴장");
         next();
       }
     );
