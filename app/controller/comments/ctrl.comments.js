@@ -1,5 +1,4 @@
 const { Comment } = require("../../models");
-const { Op } = require("sequelize");
 
 const ctrlComment = {
   commentList: async (req, res) => {
@@ -18,14 +17,16 @@ const ctrlComment = {
       const { contents } = req.body;
       const { userId } = res.locals.targetUserInfo;
       const date = new Date();
-      await Comment.create({
+      console.log("db 저장 시작한당");
+      const comment = await Comment.create({
         postId,
-        userId,
         contents,
+        userId,
         date,
       });
       res.send({
         ok: true,
+        result: comment,
         message: "댓글이 작성되었습니다.",
       });
     } catch (error) {
