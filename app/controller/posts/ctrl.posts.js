@@ -1,6 +1,6 @@
 const { Post } = require("../../models");
 const { Op } = require("sequelize");
-const Comment = require("../../schemas/Comment");
+const { Comment } = require("../../models");
 
 const getProcess = {
   //게시글 조회
@@ -142,6 +142,12 @@ const postProcess = {
         await post.destroy({
           where: { postId: postId },
         });
+        const comment = await Comment.findAll({ where: { postId: postId } });
+        if (comment) {
+          await Comment.destroy({
+            where: { postId: postId },
+          });
+        }
         res.send({
           ok: true,
           message: "게시글을 삭제했습니다.",
