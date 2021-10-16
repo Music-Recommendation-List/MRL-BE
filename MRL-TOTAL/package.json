@@ -1,0 +1,33 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon node app.js",
+    "dev": "nodemon node app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "~4.16.1",
+    "helmet": "^4.6.0",
+    "helmet-csp": "^3.4.0",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.10",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "nodemon": "^2.0.13",
+    "sequelize-cli": "^6.2.0"
+  }
+}
