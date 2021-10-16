@@ -15,7 +15,7 @@ http://3.34.44.44/
 ## 🎬 실행화면
 유튜브 링크 : https://www.youtube.com/watch?v=P5zLhz87kGE&ab_channel=%EC%9E%A5%EC%9E%AC%EC%9B%90  
 
-## ⚙️ 기술 스텍 및 툴
+## ⚙️ 기술 스택 및 툴
 
 <img src="https://img.shields.io/badge/Yarn-1.22.15-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/> <img src="https://img.shields.io/badge/React-17.0.1-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/React Router-5.2.0-CA4245?style=flat-square&logo=React Router&logoColor=white"/> <img src="https://img.shields.io/badge/Redux-4.1.1-764ABC?style=flat-square&logo=Redux&logoColor=white"/> <img src="https://img.shields.io/badge/MaterialUI-5.0.3-0081CB?style=flat-square&logo=Material-UI&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-0.21.1-764ABC?style=flat-square&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/ESLint-8.0.0-4B32C3?style=flat-square&logo=ESLint&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-14.15.1-339933?style=flat-square&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-14.15.1-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/Express-4.16.1-000000?style=flat-square&logo=Express&logoColor=white"/>  
 
